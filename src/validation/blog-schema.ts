@@ -7,7 +7,7 @@ export const createBlogSchema = z.object({
   category: z.string().min(1, 'Category is required'),
   images: z
     .array(z.string().min(1))
-    .min(1, 'At least one image is required')
+    .min(1, 'At least one image is required').optional()
 });
 
 export type CreateBlogDto = z.infer<typeof createBlogSchema>;

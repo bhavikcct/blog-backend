@@ -1,6 +1,7 @@
 import blog, { IBlog }  from '../models/blog';
 import { CreateBlogDto } from '../validation/blog-schema';
-
+import '../models/category';
+ 
 
 
 export class BlogService {
