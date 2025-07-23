@@ -10,7 +10,7 @@ export interface IBlog extends Document {
 }
 
 const BlogSchema = new Schema<IBlog>({
-  title: { type: String, required: true },
+  title: { type: String, required: true,unique: true },
   description: { type: String, required: true },
   images: { type: [String], required: true },
   author: { type: String, required: true },

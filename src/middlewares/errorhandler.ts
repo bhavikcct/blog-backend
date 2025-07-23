@@ -16,6 +16,5 @@ export const errorHandler = (err: any, req: Request, res: Response, next: NextFu
     return res.status(400).json({ error: err.message });
   }
 
-  console.log(err,19)
   res.status(500).json({ error: err.message || 'Something went wrong' });
 };

@@ -11,7 +11,7 @@ const blogController = new BlogController();
 router.post(
   "/",
   validateApiKey,
-  upload.single("images"),
+  upload.array("images",5),
   validateRequest(createBlogSchema),
   blogController.createBlogHandler
 );

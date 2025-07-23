@@ -5,30 +5,39 @@ import { CreateBlogDto, createBlogSchema } from "../validation/blog-schema";
 const blogService = new BlogService();
 
 export class BlogController {
-  createBlogHandler = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const parsed = createBlogSchema.parse(req.body);
-      const files = req.files as Express.Multer.File[];
-      const imagePaths = files?.map((file) => file.path) || [];
+createBlogHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const parsed = createBlogSchema.parse(req.body);
 
-      const input: CreateBlogDto = {
-        ...parsed,
-        images: imagePaths,
-      };
-
-      const blog = await blogService.createBlog(input);
-      res.status(201).json({
-        message: "Blog created",
-        data: blog,
-      });
-    } catch (error) {
-      next(error);
+    const existingBlog = await blogService.getBlogByTitle(parsed.title);
+    if (existingBlog) {
+      return res.status(400).json({ message: "Blog title already exists" });
     }
-  };
+
+    const files = req.files as Express.Multer.File[] || [];
+    const imagePaths = files.map((file) => file.path);
+
+    const input: CreateBlogDto = {
+      ...parsed,
+      images: imagePaths,
+    };
+
+    const createdBlog = await blogService.createBlog(input);
+    
+
+    res.status(201).json({
+      message: "Blog created",
+      data: createdBlog,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {

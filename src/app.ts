@@ -6,7 +6,8 @@ import path from 'path';
 import { connectDB } from './config/db';
 import { errorHandler } from './middlewares/errorhandler';
 
-import blogroute from './routes/blog';
+import blogRoute from './routes/blog';
+import categoryRoute from './routes/category';
 dotenv.config();
 
 connectDB()
@@ -20,7 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
-app.use('/api/v1/blog',blogroute)
+app.use('/api/v1/blog',blogRoute)
+app.use('/api/v1/category',categoryRoute)
 
 app.use(errorHandler);
 
