@@ -8,13 +8,14 @@ import { errorHandler } from './middlewares/errorhandler';
 
 import blogRoute from './routes/blog';
 import categoryRoute from './routes/category';
+import corsOptions from './config/corsoptions';
 dotenv.config();
 
 connectDB()
 
 
 const app = express();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
